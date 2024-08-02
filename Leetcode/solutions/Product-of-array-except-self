@@ -7,7 +7,7 @@ class Solution {
             res[i] = prefix;
             prefix *= nums[i];
         }
-        for(int i = nums.length-1 ; i >= 0 ; i--){
+        for(int i = nums.length-1 ; i >= 0 ; i--){    //here we multiply the prefix and postfix of the corresponding indices in the result array
             res[i] *= postfix;
             postfix *= nums[i];
         }
