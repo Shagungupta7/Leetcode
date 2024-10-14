@@ -1,9 +1,9 @@
-we can use nested for loop 
-for row1 to row2
-  for col1 to col2
-    sum
+// we can use nested for loop 
+// for row1 to row2
+//   for col1 to col2
+//     sum
 
-PREFIX
+// PREFIX
 class NumMatrix {
     int[][] mat;
     public NumMatrix(int[][] matrix) {
