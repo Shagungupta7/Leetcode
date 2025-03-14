@@ -1,69 +1,39 @@
-/************************************************************
-
- Following is the Binary Tree node structure:
-
- class TreeNode {
-     int data;
-     TreeNode left;
-     TreeNode right;
-
-     TreeNode(int data) {
-         this.data = data;
-         this.left = null;
-         this.right = null;
-     }
- }
-
- ************************************************************/
-
-import java.util.*;
-
-public class Solution {
-    public static List<Integer> traverseBoundary(TreeNode root){
-        // Write your code here.
-        List<Integer> ans = new ArrayList<>();
+class Solution
+{
+    //Function to return a list containing the bottom view of the given tree.
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        // Code here
+        ArrayList<Integer> ans = new ArrayList<>();
         if(root == null) return ans;
-        if(!isLeaf(root)) ans.add(root.data);
-
-        addLeft(root.left, ans);
-        addBottom(root, ans);
-
-        List<Integer> right = new ArrayList<>();
-        addRight(root.right, right);
-        Collections.reverse(right);
-        ans.addAll(right);
-
+        
+        Queue<Pair> q = new LinkedList<>();
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        q.offer(new Pair(root, 0));
+        
+        while(!q.isEmpty()){
+            Pair p = q.poll();
+            Node curr = p.node;
+            int col = p.col;
+            
+            map.put(col, curr.data);
+                
+            if(curr.left != null) q.offer(new Pair(curr.left, col-1));
+            if(curr.right != null)q.offer(new Pair(curr.right, col+1));
+        }
+        
+        ans.addAll(map.values());
+        
         return ans;
     }
+}
 
-    static boolean isLeaf(TreeNode root){
-        return root.left == null && root.right == null;
-    }
-
-    static void addLeft(TreeNode node, List<Integer> ans){
-        while(node != null){
-            if(!isLeaf(node)) ans.add(node.data);
-            node = node.left == null ? node.right : node.left;
-        }
-        return;
-    }
-    static void addRight(TreeNode node, List<Integer> ans){
-        while(node != null){
-            if(!isLeaf(node)) ans.add(node.data);
-            node = node.right == null ? node.left : node.right;
-        }
-        return;
-    }
-
-    static void addBottom(TreeNode node, List<Integer> ans){
-        if(node == null) return;
-        if(node.left == null && node.right == null){
-            ans.add(node.data);
-        }
-        addBottom(node.left, ans);
-        addBottom(node.right, ans);
-        return;
-    }
-
+class Pair{
+    Node node;
+    int col;
     
+    Pair(Node node, int col){
+        this.node = node;
+        this.col = col;
+    }
 }
